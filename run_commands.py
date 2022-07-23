@@ -100,6 +100,7 @@ def run_command(command, parking_lot=parking_lot):
         )
         if not car_details:
             print(f"no car is parked in slot {slot}")
+            return parking_lot
 
         print(
             f"Slot number {slot} vacated, " +

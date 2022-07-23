@@ -1,4 +1,3 @@
-from collections import namedtuple
 from parking_lot import ParkingLot, Car
 
 
@@ -45,9 +44,9 @@ def get_slot_number_from_car_registration_number(
 
 def exit_car_make_space_available(
         parking_lot: object, parking_slot: int
-) -> list:
+) -> object:
     slot_list = parking_lot.slot_list
-    car_details = namedtuple('car', ['register_number', "driver_age"])
+    car_object = None
 
     for car in slot_list:
         if not car:
@@ -55,10 +54,10 @@ def exit_car_make_space_available(
 
         if car.slot_number == parking_slot:
             slot_list[parking_slot - 1] = None
-            car_info = car_details(car.register_number, car.driver_age)
+            car_object = car
             break
 
-    return car_info
+    return car_object
 
 
 def get_registration_number_from_driver_age(
