@@ -2,7 +2,8 @@ from commands import (
     create_parking_lot,
     allocate_slot_to_car,
     get_slot_numbers_from_driver_age,
-    get_slot_number_from_car_registration_number
+    get_slot_number_from_car_registration_number,
+    exit_car_make_space_available
 )
 
 parking_lot = None
@@ -45,6 +46,7 @@ while True:
             f"Car with vehicle registration number {car.register_number}" +
             f"has been parked at slot number {car.slot_number}"
         )
+        print(parking_lot.slot_list)
 
     elif command[0] == "Slot_numbers_for_driver_of_age":
         try:
@@ -73,3 +75,19 @@ while True:
             continue
 
         print(",".join(str(slot) for slot in slot_numbers))
+
+    elif command[0] == "Leave":
+        slot = int(command[1])
+        car_details = exit_car_make_space_available(
+            parking_lot=parking_lot, parking_slot=slot
+        )
+        if not car_details:
+            print(f"no car is parked in slot {slot}")
+            continue
+
+        print(
+            "Slot number 2 vacated, " +
+            f"the car with vehicle registration number {car_details[0]} " +
+            f"left the space,the driver of the car was of age {car_details[1]}"
+        )
+        print(parking_lot.slot_list)
