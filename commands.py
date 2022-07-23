@@ -22,7 +22,7 @@ def get_slot_numbers_from_driver_age(
         if not car:
             continue
 
-        elif car.driver_age == driver_age:
+        if car.driver_age == driver_age:
             parking_slots.append(car.slot_number)
 
     return parking_slots
@@ -35,7 +35,8 @@ def get_slot_number_from_car_registration_number(
     for car in parking_lot.slot_list:
         if not car:
             continue
-        elif car.register_number == registration_number:
+
+        if car.register_number == registration_number:
             parking_slots.append(car.slot_number)
 
     return parking_slots
@@ -51,9 +52,26 @@ def exit_car_make_space_available(
         if not car:
             continue
 
-        elif car.slot_number == parking_slot:
+        if car.slot_number == parking_slot:
             slot_list[parking_slot - 1] = None
             car_details.append(car.register_number)
             car_details.append(car.driver_age)
 
     return car_details
+
+
+def get_registration_number_from_driver_age(
+        slot_list: list, driver_age: int
+) -> list:
+    register_numbers = []
+    slot_numbers = []
+
+    for car in slot_list:
+        if not car:
+            continue
+
+        if car.driver_age == driver_age:
+            register_numbers.append(car.register_number)
+            slot_numbers.append(car.slot_number)
+
+    return register_numbers, slot_numbers

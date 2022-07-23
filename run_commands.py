@@ -3,7 +3,8 @@ from commands import (
     allocate_slot_to_car,
     get_slot_numbers_from_driver_age,
     get_slot_number_from_car_registration_number,
-    exit_car_make_space_available
+    exit_car_make_space_available,
+    get_registration_number_from_driver_age
 )
 
 parking_lot = None
@@ -46,7 +47,6 @@ while True:
             f"Car with vehicle registration number {car.register_number}" +
             f"has been parked at slot number {car.slot_number}"
         )
-        print(parking_lot.slot_list)
 
     elif command[0] == "Slot_numbers_for_driver_of_age":
         try:
@@ -90,4 +90,22 @@ while True:
             f"the car with vehicle registration number {car_details[0]} " +
             f"left the space,the driver of the car was of age {car_details[1]}"
         )
-        print(parking_lot.slot_list)
+
+    elif command[0] == "Vehicle_registration_number_for_driver_of_age":
+        driver_age = int(command[1])
+        registration_numbers, slots = get_registration_number_from_driver_age(
+            slot_list=parking_lot.slot_list, driver_age=driver_age
+        )
+        if not registration_numbers:
+            print(f"no vehicals where found where driver age is {driver_age}")
+            continue
+
+        reg_numbers = ','.join(number for number in registration_numbers)
+        slot_numbers = ','.join(str(number) for number in slots)
+
+        print(
+            f"Car with vehicle registration number {reg_numbers} " +
+            f"has been parked at slot number {slot_numbers}")
+
+    else:
+        print("please use accurate commands")
