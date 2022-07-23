@@ -32,12 +32,13 @@ while True:
     if command[0] == 'exit':
         break
 
+    if not parking_lot:
+        print("please create a Parking lot with definate slots")
+        continue
+
     elif command[0] == 'Park':
         register_number = command[1]
         driver_age = int(command[3])
-        if not parking_lot:
-            print("please create a Parking lot with definate slots")
-            continue
 
         car = allocate_slot_to_car(
             register_number=register_number, driver_age=driver_age,
