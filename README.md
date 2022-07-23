@@ -1,4 +1,4 @@
-# parkinglot_problem
+# parkinglot problem
 
 ## problem statement:
 ----------------------
