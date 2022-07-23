@@ -77,7 +77,9 @@ def get_registration_number_from_driver_age(
     return register_numbers, slot_numbers
 
 
-def check_car_object_already_exists(register_number: str, slot_list: list):
+def check_car_object_already_exists(
+        register_number: str, slot_list: list
+) -> bool:
     car_already_exists = False
     for car in slot_list:
         if not car:
