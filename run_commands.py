@@ -117,6 +117,7 @@ def run_command(command, parking_lot=parking_lot):
         )
         if not registration_numbers:
             print(f"no vehicals where found where driver age is {driver_age}")
+            return parking_lot
 
         reg_numbers = ','.join(number for number in registration_numbers)
         slot_numbers = ','.join(str(number) for number in slots)
