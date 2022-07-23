@@ -1,3 +1,4 @@
+from collections import namedtuple
 from parking_lot import ParkingLot, Car
 
 
@@ -46,7 +47,7 @@ def exit_car_make_space_available(
         parking_lot: object, parking_slot: int
 ) -> list:
     slot_list = parking_lot.slot_list
-    car_details = []
+    car_details = namedtuple('car', ['register_number', "driver_age"])
 
     for car in slot_list:
         if not car:
@@ -54,15 +55,15 @@ def exit_car_make_space_available(
 
         if car.slot_number == parking_slot:
             slot_list[parking_slot - 1] = None
-            car_details.append(car.register_number)
-            car_details.append(car.driver_age)
+            car_info = car_details(car.register_number, car.driver_age)
+            break
 
-    return car_details
+    return car_info
 
 
 def get_registration_number_from_driver_age(
         slot_list: list, driver_age: int
-) -> list:
+) -> tuple:
     register_numbers = []
     slot_numbers = []
 
@@ -75,3 +76,16 @@ def get_registration_number_from_driver_age(
             slot_numbers.append(car.slot_number)
 
     return register_numbers, slot_numbers
+
+
+def check_car_object_already_exists(register_number: str, slot_list: list):
+    car_already_exists = False
+    for car in slot_list:
+        if not car:
+            continue
+
+        if car.register_number == register_number:
+            car_already_exists = True
+            break
+
+    return car_already_exists

@@ -1,10 +1,11 @@
-from commands import (
+from functions import (
     create_parking_lot,
     allocate_slot_to_car,
     get_slot_numbers_from_driver_age,
     get_slot_number_from_car_registration_number,
     exit_car_make_space_available,
-    get_registration_number_from_driver_age
+    get_registration_number_from_driver_age,
+    check_car_object_already_exists
 )
 
 parking_lot = None
@@ -47,6 +48,16 @@ while True:
         free_space = any(slot is None for slot in slot_list)
         if not free_space:
             print("Parking lot is full, please wait.")
+            continue
+
+        car_already_exists = check_car_object_already_exists(
+            register_number=register_number, slot_list=slot_list
+        )
+        if car_already_exists:
+            print(
+                f"The car with registered number {register_number} " +
+                "already parked"
+            )
             continue
 
         car = allocate_slot_to_car(
@@ -96,9 +107,11 @@ while True:
             continue
 
         print(
-            "Slot number 2 vacated, " +
-            f"the car with vehicle registration number {car_details[0]} " +
-            f"left the space,the driver of the car was of age {car_details[1]}"
+            f"Slot number {slot} vacated, " +
+            "the car with vehicle registration number " +
+            f"{car_details.register_number} " +
+            "left the space,the driver of the car was of age" +
+            f"{car_details.driver_age}"
         )
 
     elif command[0] == "Vehicle_registration_number_for_driver_of_age":
