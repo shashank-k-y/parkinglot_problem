@@ -36,6 +36,9 @@ while True:
         print("please create a Parking lot with definate slots")
         continue
 
+    if command[0] == "Create_parking_lot":
+        print("parking_lot already created, please use other commands")
+
     elif command[0] == 'Park':
         register_number = command[1]
         driver_age = int(command[3])
