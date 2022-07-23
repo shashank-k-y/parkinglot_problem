@@ -43,6 +43,12 @@ while True:
         register_number = command[1]
         driver_age = int(command[3])
 
+        slot_list = parking_lot.slot_list
+        free_space = any(slot is None for slot in slot_list)
+        if not free_space:
+            print("Parking lot is full, please wait.")
+            continue
+
         car = allocate_slot_to_car(
             register_number=register_number, driver_age=driver_age,
             parking_lot=parking_lot
