@@ -2,9 +2,9 @@ class ParkingLot():
     def __init__(self, max_slots):
         self.slot_list = [None] * max_slots
 
-    @staticmethod
-    def create_parking_lot(max_slots: int) -> object:
-        return ParkingLot(max_slots=max_slots)
+    @classmethod
+    def create_parking_lot(cls, max_slots: int) -> object:
+        return cls(max_slots=max_slots)
 
     def allocate_slot_to_car(
         self, register_number: str, driver_age: int
