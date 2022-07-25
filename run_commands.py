@@ -1,12 +1,4 @@
-from functions import (
-    create_parking_lot,
-    allocate_slot_to_car,
-    get_slot_numbers_from_driver_age,
-    get_slot_number_from_car_registration_number,
-    exit_car_make_space_available,
-    get_registration_number_from_driver_age,
-    check_car_object_already_exists
-)
+from parking_lot import ParkingLot
 
 parking_lot = None
 
@@ -23,7 +15,7 @@ def run_command(command, parking_lot=parking_lot):
             print("please give an integer value to the parking slots")
             return parking_lot
 
-        parking_lot = create_parking_lot(max_slots=max_slots)
+        parking_lot = ParkingLot.create_parking_lot(max_slots=max_slots)
         print(f'Created parking lot of {max_slots} slots')
         return parking_lot
 
@@ -45,8 +37,8 @@ def run_command(command, parking_lot=parking_lot):
             print("Parking lot is full, please wait.")
             return parking_lot
 
-        car_already_exists = check_car_object_already_exists(
-            register_number=register_number, slot_list=slot_list
+        car_already_exists = parking_lot.check_car_object_already_exists(
+            register_number=register_number,
         )
         if car_already_exists:
             print(
@@ -55,9 +47,8 @@ def run_command(command, parking_lot=parking_lot):
             )
             return parking_lot
 
-        car = allocate_slot_to_car(
+        car = parking_lot.allocate_slot_to_car(
             register_number=register_number, driver_age=driver_age,
-            parking_lot=parking_lot
         )
         print(
             f"Car with vehicle registration number {car.register_number}" +
@@ -72,8 +63,8 @@ def run_command(command, parking_lot=parking_lot):
             print("driver age should be an integer")
             return parking_lot
 
-        slot_numbers = get_slot_numbers_from_driver_age(
-            parking_lot=parking_lot, driver_age=driver_age
+        slot_numbers = parking_lot.get_slot_numbers_from_driver_age(
+            driver_age=driver_age
         )
         if not slot_numbers:
             print(f"No slots found for driver age {driver_age}")
@@ -84,8 +75,8 @@ def run_command(command, parking_lot=parking_lot):
     elif command[0] == "Slot_number_for_car_with_number":
         register_number = command[1]
 
-        slot_numbers = get_slot_number_from_car_registration_number(
-            parking_lot=parking_lot, registration_number=register_number
+        slot_numbers = parking_lot.get_slot_from_registration_number(
+            registration_number=register_number
         )
         if not slot_numbers:
             print(f"No slots found for registration number{register_number}")
@@ -95,8 +86,8 @@ def run_command(command, parking_lot=parking_lot):
 
     elif command[0] == "Leave":
         slot = int(command[1])
-        car_details = exit_car_make_space_available(
-            parking_lot=parking_lot, parking_slot=slot
+        car_details = parking_lot.exit_car_make_space_available(
+            parking_slot=slot
         )
         if not car_details:
             print(f"no car is parked in slot {slot}")
@@ -113,8 +104,8 @@ def run_command(command, parking_lot=parking_lot):
 
     elif command[0] == "Vehicle_registration_number_for_driver_of_age":
         driver_age = int(command[1])
-        registration_numbers, slots = get_registration_number_from_driver_age(
-            slot_list=parking_lot.slot_list, driver_age=driver_age
+        registration_numbers, slots = parking_lot.get_registration_number_from_driver_age(  # noqa
+            driver_age=driver_age
         )
         if not registration_numbers:
             print(f"no vehicals where found where driver age is {driver_age}")
@@ -124,7 +115,8 @@ def run_command(command, parking_lot=parking_lot):
         slot_numbers = ','.join(str(number) for number in slots)
 
         print(
-            f"Car with vehicle registration number {reg_numbers} " +
+            f"The driver of age {driver_age} has vehicle " +
+            f"registration number {reg_numbers} " +
             f"has been parked at slot number {slot_numbers}"
         )
         return parking_lot
