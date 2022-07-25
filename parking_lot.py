@@ -81,6 +81,9 @@ class ParkingLot():
 
         return car_already_exists
 
+    def check_free_space_exists(self):
+        return any(slot is None for slot in self.slot_list)
+
 
 class Car():
     def __init__(self, register_number, driver_age, parking_lot):

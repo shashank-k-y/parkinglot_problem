@@ -31,8 +31,7 @@ def run_command(command, parking_lot=parking_lot):
         register_number = command[1]
         driver_age = int(command[3])
 
-        slot_list = parking_lot.slot_list
-        free_space = any(slot is None for slot in slot_list)
+        free_space = parking_lot.check_free_space_exists()
         if not free_space:
             print("Parking lot is full, please wait.")
             return parking_lot
